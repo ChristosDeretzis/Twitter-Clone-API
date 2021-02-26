@@ -46,7 +46,7 @@ public class User {
 
     @CreationTimestamp
     @Column(name = "last_updated_at")
-    private LocalDateTime last_updated_;
+    private LocalDateTime last_updated_at;
 
     @ManyToMany
     @JoinTable(
