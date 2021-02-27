@@ -1,4 +1,4 @@
-package com.christos.app.twittercloneapi.entities;
+package com.christos.app.twittercloneapi.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,17 +8,22 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @Entity
-@Table(name = "retweet")
-public class Retweet {
+@Table(name = "tweet")
+public class Tweet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "retweet_id")
-    private int id;
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "content")
+    private String content;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -28,8 +33,9 @@ public class Retweet {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "tweet_id")
-    private Tweet tweet;
+    @OneToMany(mappedBy = "tweet")
+    private List<Comment> comments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "tweet")
+    private List<Like> likes = new ArrayList<>();
 }

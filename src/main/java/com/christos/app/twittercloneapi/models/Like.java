@@ -1,30 +1,24 @@
-package com.christos.app.twittercloneapi.entities;
+package com.christos.app.twittercloneapi.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.type.descriptor.spi.JdbcRecommendedSqlTypeMappingContext;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @Entity
-@Table(name = "tweet")
-public class Tweet {
+@Table(name = "Like")
+public class Like {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-
-    @Column(name = "content")
-    private String content;
+    @Column(name = "like_id")
+    private Long id;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -34,9 +28,7 @@ public class Tweet {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "tweet")
-    private List<Comment> comments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "tweet")
-    private List<Like> likes = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "tweet_id")
+    private Tweet tweet;
 }

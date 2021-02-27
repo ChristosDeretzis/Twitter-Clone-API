@@ -1,4 +1,4 @@
-package com.christos.app.twittercloneapi.entities;
+package com.christos.app.twittercloneapi.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "content")
     private String content;

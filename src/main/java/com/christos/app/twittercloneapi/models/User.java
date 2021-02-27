@@ -1,5 +1,7 @@
-package com.christos.app.twittercloneapi.entities;
+package com.christos.app.twittercloneapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,18 +11,23 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
 @Entity
 @Table(name = "user")
 public class User {
 
+    public User() {
+
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "username")
     private String username;
@@ -54,7 +61,8 @@ public class User {
             joinColumns = @JoinColumn(name = "user_02"),
             inverseJoinColumns = @JoinColumn(name = "user_01")
     )
-    private List<User> followers;
+    @JsonIgnore
+    private Set<User> followers = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -62,14 +70,18 @@ public class User {
             joinColumns = @JoinColumn(name = "user_01"),
             inverseJoinColumns = @JoinColumn(name = "user_02")
     )
-    private List<User> following = new ArrayList<>();
+    @JsonIgnore
+    private Set<User> following = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Tweet> tweets = new ArrayList<>();
+    @JsonIgnore
+    private Set<Tweet> tweets = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Comment> comments = new ArrayList<>();
+    @JsonIgnore
+    private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Like> likes = new ArrayList<>();
+    @JsonIgnore
+    private Set<Like> likes = new HashSet<>();
 }

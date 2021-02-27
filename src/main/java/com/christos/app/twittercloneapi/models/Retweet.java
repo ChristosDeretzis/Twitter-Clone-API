@@ -1,4 +1,4 @@
-package com.christos.app.twittercloneapi.entities;
+package com.christos.app.twittercloneapi.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @Entity
-@Table(name = "Like")
-public class Like {
+@Table(name = "retweet")
+public class Retweet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "like_id")
-    private int id;
+    @Column(name = "retweet_id")
+    private Long id;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -31,4 +31,5 @@ public class Like {
     @ManyToOne
     @JoinColumn(name = "tweet_id")
     private Tweet tweet;
+
 }
