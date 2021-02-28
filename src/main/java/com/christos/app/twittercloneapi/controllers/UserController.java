@@ -3,7 +3,9 @@ package com.christos.app.twittercloneapi.controllers;
 import com.christos.app.twittercloneapi.exceptions.exceptions.UserNotFoundException;
 import com.christos.app.twittercloneapi.models.User;
 import com.christos.app.twittercloneapi.services.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,4 +36,20 @@ public class UserController {
 
         return user;
     }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+        User user = userService.getUserById(id);
+
+        if (user == null) {
+            throw new UserNotFoundException("User not found with id: " + id);
+        }
+
+        userService.copyNonNullProperties(updatedUser, user);
+        userService.updateUser(user);
+
+        return ResponseEntity.ok(user);
+    }
+
+
 }

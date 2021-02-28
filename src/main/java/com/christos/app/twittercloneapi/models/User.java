@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,6 +22,7 @@ import java.util.Set;
 @Getter @Setter
 @Entity
 @Table(name = "user")
+@DynamicUpdate
 public class User {
 
     public User() {
@@ -40,7 +43,7 @@ public class User {
     @Column(name = "last_name")
     private String last_name;
 
-    @Column(name = "email")
+    @Column(name = "email", updatable = false)
     private String email;
 
     @Column(name = "password")
@@ -51,10 +54,10 @@ public class User {
     private String sex;
 
     @CreationTimestamp
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime created_at;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     @Column(name = "last_updated_at")
     private LocalDateTime last_updated_at;
 
@@ -64,7 +67,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_02"),
             inverseJoinColumns = @JoinColumn(name = "user_01")
     )
-    @JsonBackReference
+    @JsonBackReference(value = "user-followers")
     private Set<User> followers = new HashSet<>();
 
     @ManyToMany
@@ -73,7 +76,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_01"),
             inverseJoinColumns = @JoinColumn(name = "user_02")
     )
-    @JsonBackReference
+    @JsonBackReference(value = "user-following")
     private Set<User> following = new HashSet<>();
 
     @OneToMany(mappedBy = "user")

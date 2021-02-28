@@ -8,7 +8,7 @@ CREATE TABLE `twitter_clone`.`user` (
   `last_name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `sex` VARCHAR(10) NULL,
+  `sex` VARCHAR(10) NOT NULL,
   `created_at` DATETIME NOT NULL,
   `last_updated_at` VARCHAR(45) NOT NULL,
   `bio` VARCHAR(45) NULL,
