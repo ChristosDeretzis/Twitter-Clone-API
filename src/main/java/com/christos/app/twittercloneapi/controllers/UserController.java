@@ -1,5 +1,6 @@
 package com.christos.app.twittercloneapi.controllers;
 
+import com.christos.app.twittercloneapi.exceptions.exceptions.UserAlreadyExistsException;
 import com.christos.app.twittercloneapi.exceptions.exceptions.UserNotFoundException;
 import com.christos.app.twittercloneapi.models.User;
 import com.christos.app.twittercloneapi.services.UserService;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 @RestController
@@ -46,9 +48,34 @@ public class UserController {
         }
 
         userService.copyNonNullProperties(updatedUser, user);
-        userService.updateUser(user);
+        userService.updateOrSaveUser(user);
 
         return ResponseEntity.ok(user);
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+
+        if (user == null) {
+            throw new UserNotFoundException("User not found with id: " + id);
+        }
+
+        userService.deleteUser(user);
+
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<User> addUser(@RequestBody User newUser) {
+        User user = userService.getUserByEmailOrUsername(newUser.getUsername(), newUser.getEmail());
+
+        if (user != null) {
+            throw new UserAlreadyExistsException("User already exists");
+        }
+
+        userService.updateOrSaveUser(newUser);
+        return ResponseEntity.ok(newUser);
     }
 
 
