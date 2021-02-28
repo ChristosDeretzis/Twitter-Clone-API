@@ -1,7 +1,9 @@
 package com.christos.app.twittercloneapi.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,6 +44,7 @@ public class User {
     private String email;
 
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @Column(name = "sex")
@@ -61,7 +64,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_02"),
             inverseJoinColumns = @JoinColumn(name = "user_01")
     )
-    @JsonIgnore
+    @JsonBackReference
     private Set<User> followers = new HashSet<>();
 
     @ManyToMany
@@ -70,7 +73,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_01"),
             inverseJoinColumns = @JoinColumn(name = "user_02")
     )
-    @JsonIgnore
+    @JsonBackReference
     private Set<User> following = new HashSet<>();
 
     @OneToMany(mappedBy = "user")

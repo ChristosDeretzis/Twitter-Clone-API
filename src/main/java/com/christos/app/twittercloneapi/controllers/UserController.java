@@ -1,5 +1,6 @@
 package com.christos.app.twittercloneapi.controllers;
 
+import com.christos.app.twittercloneapi.exceptions.exceptions.UserNotFoundException;
 import com.christos.app.twittercloneapi.models.User;
 import com.christos.app.twittercloneapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,12 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     private User getUserById(@PathVariable Long id){
-        return userService.getUserById(id);
+        User user =  userService.getUserById(id);
 
+        if (user == null){
+            throw new UserNotFoundException("There is no user with id: " + id);
+        }
+
+        return user;
     }
 }
