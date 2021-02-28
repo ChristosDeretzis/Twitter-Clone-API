@@ -16,7 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Getter @Setter
 @Entity
 @Table(name = "user")
 @DynamicUpdate
@@ -65,7 +64,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "user_01")
     )
     @JsonBackReference(value = "user-followers")
-    private Set<User> followers = new HashSet<>();
+    private List<User> followers = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -74,19 +73,23 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "user_02")
     )
     @JsonBackReference(value = "user-following")
-    private Set<User> following = new HashSet<>();
+    private List<User> following = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private Set<Tweet> tweets = new HashSet<>();
+    @JsonBackReference(value = "user-tweets")
+    private List<Tweet> tweets = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private Set<Comment> comments = new HashSet<>();
+    @JsonBackReference(value = "user-comments")
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private Set<Like> likes = new HashSet<>();
+    @JsonBackReference(value = "user-likes")
+    private List<Like> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference(value = "user-retweets")
+    private List<Retweet> retweets = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -142,5 +145,53 @@ public class User {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public List<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<User> followers) {
+        this.followers = followers;
+    }
+
+    public List<User> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<User> following) {
+        this.following = following;
+    }
+
+    public List<Tweet> getTweets() {
+        return tweets;
+    }
+
+    public void setTweets(List<Tweet> tweets) {
+        this.tweets = tweets;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
+    }
+
+    public List<Retweet> getRetweets() {
+        return retweets;
+    }
+
+    public void setRetweets(List<Retweet> retweets) {
+        this.retweets = retweets;
     }
 }
