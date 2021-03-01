@@ -1,6 +1,7 @@
 package com.christos.app.twittercloneapi.services;
 
 import com.christos.app.twittercloneapi.models.Tweet;
+import com.christos.app.twittercloneapi.models.User;
 import com.christos.app.twittercloneapi.repositories.TweetRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +26,22 @@ public class TweetService {
 
     public List<Tweet> getTweetsByUserId(Long user_id) {
         return tweetRepository.getTweetsByUserId(user_id);
+    }
+
+    public Tweet createNewTweet(String content, User user) {
+        Tweet tweet = new Tweet();
+        tweet.setUser(user);
+        tweet.setContent(content);
+
+        tweetRepository.save(tweet);
+        return tweet;
+    }
+
+    public void updateTweet(Tweet tweet) {
+        tweetRepository.save(tweet);
+    }
+
+    public void deleteTweet(Tweet tweet) {
+        tweetRepository.delete(tweet);
     }
 }

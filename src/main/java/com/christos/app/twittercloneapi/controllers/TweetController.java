@@ -6,11 +6,10 @@ import com.christos.app.twittercloneapi.models.Tweet;
 import com.christos.app.twittercloneapi.models.User;
 import com.christos.app.twittercloneapi.services.TweetService;
 import com.christos.app.twittercloneapi.services.UserService;
+import com.christos.app.twittercloneapi.utils.UpdateJsonUtils;
 import jdk.internal.dynalink.linker.LinkerServices;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.jws.soap.SOAPBinding;
 import java.util.List;
@@ -55,5 +54,40 @@ public class TweetController {
         return userTweets;
     }
 
+    @PostMapping("/tweets")
+    public ResponseEntity<Tweet> createTweet(@RequestParam("user_id") Long id, @RequestParam("text") String content) {
+        User user = userService.getUserById(id);
 
+        if (user == null) {
+            throw new UserNotFoundException("User with id: " + id + " was not found");
+        }
+
+        Tweet newTweet = tweetService.createNewTweet(content, user);
+        return ResponseEntity.ok(newTweet);
+    }
+
+    @PutMapping("/tweets/{tweet_id}")
+    public ResponseEntity<Tweet> updateTweet(@RequestBody Tweet newTweet, @PathVariable("tweet_id") Long id){
+        Tweet tweet = tweetService.getTweetById(id);
+
+        if (tweet == null){
+            throw new TweetNotFoundException("Tweet with id " + id + " does not exist.");
+        }
+
+        UpdateJsonUtils.copyNonNullProperties(newTweet, tweet);
+        tweetService.updateTweet(tweet);
+        return ResponseEntity.ok(tweet);
+    }
+
+    @DeleteMapping("/tweets/{tweet_id}")
+    public ResponseEntity<Tweet> deleteTweet(@PathVariable("tweet_id") Long id) {
+        Tweet tweet = tweetService.getTweetById(id);
+
+        if (tweet == null){
+            throw new TweetNotFoundException("Tweet with id " + id + " does not exist.");
+        }
+
+        tweetService.deleteTweet(tweet);
+        return ResponseEntity.ok(tweet);
+    }
 }

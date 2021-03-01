@@ -4,6 +4,7 @@ import com.christos.app.twittercloneapi.exceptions.exceptions.UserAlreadyExistsE
 import com.christos.app.twittercloneapi.exceptions.exceptions.UserNotFoundException;
 import com.christos.app.twittercloneapi.models.User;
 import com.christos.app.twittercloneapi.services.UserService;
+import com.christos.app.twittercloneapi.utils.UpdateJsonUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +48,7 @@ public class UserController {
             throw new UserNotFoundException("User not found with id: " + id);
         }
 
-        userService.copyNonNullProperties(updatedUser, user);
+        UpdateJsonUtils.copyNonNullProperties(updatedUser, user);
         userService.updateOrSaveUser(user);
 
         return ResponseEntity.ok(user);
