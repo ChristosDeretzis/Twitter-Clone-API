@@ -12,7 +12,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
 @Entity
 @Table(name = "Like")
 public class Like {
