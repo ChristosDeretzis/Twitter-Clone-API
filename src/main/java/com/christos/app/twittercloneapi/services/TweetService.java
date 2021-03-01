@@ -18,4 +18,12 @@ public class TweetService {
     public List<Tweet> getAllTweets(){
         return tweetRepository.findAll();
     }
+
+    public Tweet getTweetById(Long tweet_id) {
+        return tweetRepository.getTweetById(tweet_id);
+    }
+
+    public List<Tweet> getTweetsByUserId(Long user_id) {
+        return tweetRepository.getTweetsByUserId(user_id);
+    }
 }
