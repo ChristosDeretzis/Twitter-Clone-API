@@ -1,6 +1,6 @@
 package com.christos.app.twittercloneapi.exceptions.exceptions;
 
-public class TweetNotFoundException extends RuntimeException implements NotFoundException {
+public class TweetNotFoundException extends NotFoundException {
 
     public TweetNotFoundException(String message) {
         super(message);

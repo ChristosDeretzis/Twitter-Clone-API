@@ -1,6 +1,6 @@
 package com.christos.app.twittercloneapi.exceptions.exceptions;
 
-public class UserNotFoundException extends RuntimeException implements NotFoundException{
+public class UserNotFoundException extends NotFoundException {
 
     public UserNotFoundException(String message) {
         super(message);

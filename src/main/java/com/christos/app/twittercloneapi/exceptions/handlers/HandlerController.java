@@ -1,9 +1,6 @@
 package com.christos.app.twittercloneapi.exceptions.handlers;
 
-import com.christos.app.twittercloneapi.exceptions.exceptions.ErrorResponse;
-import com.christos.app.twittercloneapi.exceptions.exceptions.TweetNotFoundException;
-import com.christos.app.twittercloneapi.exceptions.exceptions.UserAlreadyExistsException;
-import com.christos.app.twittercloneapi.exceptions.exceptions.UserNotFoundException;
+import com.christos.app.twittercloneapi.exceptions.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,18 +12,7 @@ import java.time.LocalDateTime;
 public class HandlerController {
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException exception) {
-        ErrorResponse errorResponse = new ErrorResponse();
-
-        errorResponse.setMessage(exception.getMessage());
-        errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
-        errorResponse.setTimestamp(LocalDateTime.now());
-
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleTweetNotFoundException(TweetNotFoundException exception) {
+    public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException exception) {
         ErrorResponse errorResponse = new ErrorResponse();
 
         errorResponse.setMessage(exception.getMessage());
