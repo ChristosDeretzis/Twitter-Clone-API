@@ -12,7 +12,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter @Setter
 @Entity
 @Table(name = "comment")
 @DynamicUpdate

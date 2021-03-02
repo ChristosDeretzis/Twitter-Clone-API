@@ -11,7 +11,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter @Setter
 @Entity
 @Table(name = "Like")
 public class Like {
