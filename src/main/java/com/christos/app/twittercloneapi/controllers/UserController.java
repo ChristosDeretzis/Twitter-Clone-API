@@ -5,6 +5,7 @@ import com.christos.app.twittercloneapi.exceptions.exceptions.UserNotFoundExcept
 import com.christos.app.twittercloneapi.models.User;
 import com.christos.app.twittercloneapi.services.UserService;
 import com.christos.app.twittercloneapi.utils.UpdateJsonUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
 
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userService;
 
     @GetMapping("/users")
     private List<User> getAllUsers(){

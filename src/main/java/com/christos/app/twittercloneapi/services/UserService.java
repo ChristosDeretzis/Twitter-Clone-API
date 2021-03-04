@@ -2,6 +2,7 @@ package com.christos.app.twittercloneapi.services;
 
 import com.christos.app.twittercloneapi.models.User;
 import com.christos.app.twittercloneapi.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -14,14 +15,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@AllArgsConstructor
 @Service
 public class UserService {
 
     private UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public List<User> getAllUsers(){
         return userRepository.findAll();

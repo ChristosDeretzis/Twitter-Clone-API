@@ -8,23 +8,21 @@ import com.christos.app.twittercloneapi.services.TweetService;
 import com.christos.app.twittercloneapi.services.UserService;
 import com.christos.app.twittercloneapi.utils.UpdateJsonUtils;
 import jdk.internal.dynalink.linker.LinkerServices;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 public class TweetController {
 
     private UserService userService;
     private TweetService tweetService;
-
-    public TweetController(TweetService tweetService, UserService userService) {
-        this.tweetService = tweetService;
-        this.userService = userService;
-    }
 
     @GetMapping("/tweets")
     public List<Tweet> getAllTweets() {
@@ -63,7 +61,7 @@ public class TweetController {
         }
 
         Tweet newTweet = tweetService.createNewTweet(content, user);
-        return ResponseEntity.ok(newTweet);
+        return ResponseEntity.status(HttpStatus.OK).body(newTweet);
     }
 
     @PutMapping("/tweets/{tweet_id}")
