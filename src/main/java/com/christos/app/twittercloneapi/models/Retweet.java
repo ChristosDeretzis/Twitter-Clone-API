@@ -21,7 +21,7 @@ public class Retweet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "retweet_id")
+    @Column(name = "id")
     private Long id;
 
     @CreationTimestamp

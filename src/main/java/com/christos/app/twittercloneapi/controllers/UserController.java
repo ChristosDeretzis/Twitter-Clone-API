@@ -1,18 +1,14 @@
 package com.christos.app.twittercloneapi.controllers;
 
-import com.christos.app.twittercloneapi.exceptions.exceptions.UserAlreadyExistsException;
+import com.christos.app.twittercloneapi.exceptions.exceptions.AlreadyExistsException;
 import com.christos.app.twittercloneapi.exceptions.exceptions.UserNotFoundException;
 import com.christos.app.twittercloneapi.models.User;
 import com.christos.app.twittercloneapi.services.UserService;
 import com.christos.app.twittercloneapi.utils.UpdateJsonUtils;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 @AllArgsConstructor
@@ -70,7 +66,7 @@ public class UserController {
         User user = userService.getUserByEmailOrUsername(newUser.getUsername(), newUser.getEmail());
 
         if (user != null) {
-            throw new UserAlreadyExistsException("User already exists");
+            throw new AlreadyExistsException("User already exists");
         }
 
         userService.updateOrSaveUser(newUser);

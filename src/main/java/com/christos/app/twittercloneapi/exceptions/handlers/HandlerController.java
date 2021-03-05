@@ -23,7 +23,7 @@ public class HandlerController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleUserAlreadyExistsException(UserAlreadyExistsException exception) {
+    public ResponseEntity<ErrorResponse> handleUserAlreadyExistsException(AlreadyExistsException exception) {
         ErrorResponse errorResponse = new ErrorResponse();
 
         errorResponse.setMessage(exception.getMessage());
