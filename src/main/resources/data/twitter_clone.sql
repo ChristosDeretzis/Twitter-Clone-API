@@ -78,7 +78,7 @@ CREATE TABLE `twitter_clone`.`likes` (
   `tweet_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   `created_at` DATETIME NOT NULL,
-  PRIMARY KEY (`like_id`),
+  PRIMARY KEY (`id`),
   INDEX `tweet_id_idx` (`tweet_id` ASC) VISIBLE,
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_like_tweet_id`
@@ -100,11 +100,11 @@ CREATE TABLE `twitter_clone`.`retweet` (
   `tweet_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   `created_at` DATETIME NOT NULL,
-  PRIMARY KEY (`retweet_id`),
+  PRIMARY KEY (`id`),
   INDEX `tweet_id_idx` (`tweet_id` ASC) VISIBLE,
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_retweet_tweet_id`
-    FOREIGN KEY (`retweet_id`)
+    FOREIGN KEY (`tweet_id`)
     REFERENCES `twitter_clone`.`tweet` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
