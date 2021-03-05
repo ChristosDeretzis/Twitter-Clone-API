@@ -73,8 +73,8 @@ CREATE TABLE `twitter_clone`.`follow` (
 	UNIQUE (`user_01`, `user_02`)
 );
 
-CREATE TABLE `twitter_clone`.`like` (
-  `like_id` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE `twitter_clone`.`likes` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `tweet_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   `created_at` DATETIME NOT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE `twitter_clone`.`like` (
 );
 
 CREATE TABLE `twitter_clone`.`retweet` (
-  `retweet_id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `tweet_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   `created_at` DATETIME NOT NULL,
