@@ -28,8 +28,8 @@ CREATE TABLE `twitter_clone`.`tweet` (
   CONSTRAINT `fk_tweet_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `twitter_clone`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
     
 CREATE TABLE `twitter_clone`.`comment` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -43,13 +43,13 @@ CREATE TABLE `twitter_clone`.`comment` (
   CONSTRAINT `fk_comment_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `twitter_clone`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_comment_tweet_id`
     FOREIGN KEY (`tweet_id`)
     REFERENCES `twitter_clone`.`tweet` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
     
 CREATE TABLE `twitter_clone`.`follow` (
   `follow_id` INT NOT NULL AUTO_INCREMENT,
@@ -63,7 +63,7 @@ CREATE TABLE `twitter_clone`.`follow` (
     FOREIGN KEY (`user_01`)
     REFERENCES `twitter_clone`.`user` (`id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION,
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_follow_user_02`
     FOREIGN KEY (`user_02`)
     REFERENCES `twitter_clone`.`user` (`id`)
