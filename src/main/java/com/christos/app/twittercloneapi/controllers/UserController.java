@@ -25,52 +25,22 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     private User getUserById(@PathVariable Long id){
-        User user =  userService.getUserById(id);
-
-        if (user == null){
-            throw new UserNotFoundException("There is no user with id: " + id);
-        }
-
-        return user;
+        return userService.getUserById(id);
     }
 
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody User updatedUser) {
-        User user = userService.getUserById(id);
-
-        if (user == null) {
-            throw new UserNotFoundException("User not found with id: " + id);
-        }
-
-        UpdateJsonUtils.copyNonNullProperties(updatedUser, user);
-        userService.updateOrSaveUser(user);
-
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userService.updateUser(id,updatedUser));
     }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable("id") Long id) {
-        User user = userService.getUserById(id);
-
-        if (user == null) {
-            throw new UserNotFoundException("User not found with id: " + id);
-        }
-
-        userService.deleteUser(user);
-
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userService.deleteUser(id));
     }
 
     @PostMapping("/users")
     public ResponseEntity<User> addUser(@RequestBody User newUser) {
-        User user = userService.getUserByEmailOrUsername(newUser.getUsername(), newUser.getEmail());
-
-        if (user != null) {
-            throw new AlreadyExistsException("User already exists");
-        }
-
-        userService.updateOrSaveUser(newUser);
-        return ResponseEntity.ok(newUser);
+        return ResponseEntity.ok(userService.createUser(newUser));
     }
 
 
