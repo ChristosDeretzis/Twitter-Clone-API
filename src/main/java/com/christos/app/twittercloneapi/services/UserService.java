@@ -29,20 +29,15 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-        User user = userRepository.getUserById(id);
-        if (user == null){
-            throw new UserNotFoundException("There is no user with id: " + id);
-        }
+        User user = userRepository.getUserById(id)
+                .orElseThrow(() -> new UserNotFoundException("There is no user with id: " + id));
 
         return user;
     }
 
     public User updateUser(Long id, User updatedUser) {
-        User user = userRepository.getUserById(id);
-
-        if (user == null) {
-            throw new UserNotFoundException("User not found with id: " + id);
-        }
+        User user = userRepository.getUserById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
 
         UpdateJsonUtils.copyNonNullProperties(updatedUser, user);
         userRepository.save(user);
@@ -62,11 +57,8 @@ public class UserService {
     }
 
     public User deleteUser(Long id) {
-        User user = userRepository.getUserById(id);
-
-        if (user == null) {
-            throw new UserNotFoundException("User not found with id: " + id);
-        }
+        User user = userRepository.getUserById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
 
         userRepository.delete(user);
         return user;

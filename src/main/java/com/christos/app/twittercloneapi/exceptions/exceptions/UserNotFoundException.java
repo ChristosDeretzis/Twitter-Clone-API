@@ -1,6 +1,10 @@
 package com.christos.app.twittercloneapi.exceptions.exceptions;
 
-public class UserNotFoundException extends NotFoundException {
+import com.christos.app.twittercloneapi.models.User;
+
+import java.util.function.Supplier;
+
+public class UserNotFoundException extends NotFoundException{
 
     public UserNotFoundException(String message) {
         super(message);
@@ -13,4 +17,5 @@ public class UserNotFoundException extends NotFoundException {
     public UserNotFoundException(Throwable cause) {
         super(cause);
     }
+
 }

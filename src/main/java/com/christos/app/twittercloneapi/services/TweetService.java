@@ -23,11 +23,8 @@ public class TweetService {
     }
 
     public Tweet getTweetById(Long tweet_id) {
-        Tweet tweet = tweetRepository.getTweetById(tweet_id);
-
-        if (tweet == null){
-            throw new TweetNotFoundException("Tweet with id " + tweet_id + " does not exist.");
-        }
+        Tweet tweet = tweetRepository.getTweetById(tweet_id)
+                .orElseThrow(() -> new TweetNotFoundException("Tweet with id " + tweet_id + " does not exist."));
 
         return tweet;
     }
@@ -59,11 +56,8 @@ public class TweetService {
     }
 
     public Tweet updateTweet(Long id, Tweet newTweet) {
-        Tweet tweet = tweetRepository.getTweetById(id);
-
-        if (tweet == null){
-            throw new TweetNotFoundException("Tweet with id " + id + " does not exist.");
-        }
+        Tweet tweet = tweetRepository.getTweetById(id)
+                .orElseThrow(() -> new TweetNotFoundException("Tweet with id " + id + " does not exist."));
 
         UpdateJsonUtils.copyNonNullProperties(newTweet, tweet);
         tweetRepository.save(tweet);
@@ -72,12 +66,11 @@ public class TweetService {
     }
 
     public Tweet deleteTweet(Long id) {
-        Tweet tweet = tweetRepository.getTweetById(id);
+        Tweet tweet = tweetRepository.getTweetById(id)
+                .orElseThrow(() -> new TweetNotFoundException("Tweet with id " + id + " does not exist."));
 
-        if (tweet == null){
-            throw new TweetNotFoundException("Tweet with id " + id + " does not exist.");
-        }
         tweetRepository.delete(tweet);
+
         return tweet;
     }
 }

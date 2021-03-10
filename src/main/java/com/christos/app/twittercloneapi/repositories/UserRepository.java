@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT u.* FROM user u WHERE u.id = :id", nativeQuery = true)
-    User getUserById(Long id);
+    Optional<User> getUserById(Long id);
 
     @Query(value = "SELECT u.* FROM user u WHERE u.username = :username OR u.email = :email", nativeQuery = true)
     User getUserByUsernameOrEmail(String username, String email);

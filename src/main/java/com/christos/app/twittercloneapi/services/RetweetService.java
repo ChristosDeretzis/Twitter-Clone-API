@@ -27,32 +27,29 @@ public class RetweetService {
     }
 
     public List<Retweet> getAllRetweetsByUser(Long userId) {
-        User user = userRepository.getUserById(userId);
-        if (user == null) {
-            throw new UserNotFoundException("User with id: " + userId + " was not found");
-        }
+        User user = userRepository.getUserById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User with id: " + userId + " was not found"));
 
         return retweetRepository.getRetweetsByUserId(userId);
     }
 
     public List<Retweet> getAllRetweetsByTweet(Long tweetId) {
-        Tweet tweet = tweetRepository.getTweetById(tweetId);
-        if (tweet == null) {
-            throw new TweetNotFoundException("Tweet with id: " + tweetId + " was not found");
-        }
+        Tweet tweet = tweetRepository.getTweetById(tweetId)
+                .orElseThrow(() -> new TweetNotFoundException("Tweet with id: " + tweetId + " was not found"));
 
         return retweetRepository.getRetweetsByTweetId(tweetId);
     }
 
     public Retweet retweetATweet(Long tweetId, Long userId) {
-        User user = userRepository.getUserById(userId);
-        Tweet tweet = tweetRepository.getTweetById(tweetId);
+        User user = userRepository.getUserById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User with id: " + userId + " was not found"));
+
+        Tweet tweet = tweetRepository.getTweetById(tweetId)
+                .orElseThrow(() -> new TweetNotFoundException("Tweet with id: " + tweetId + " was not found"));
+
         Retweet existsRetweet = retweetRepository.getRetweetByUserIdAndTweetId(userId, tweetId);
-        if (user == null) {
-            throw new UserNotFoundException("User with id: " + userId + " was not found");
-        } else if (tweet == null) {
-            throw new TweetNotFoundException("Tweet with id: " + tweetId + " was not found");
-        } else if (existsRetweet != null) {
+
+        if (existsRetweet != null) {
             throw new AlreadyExistsException("Retweet with id: " + existsRetweet.getId() + " already exists");
         }
 

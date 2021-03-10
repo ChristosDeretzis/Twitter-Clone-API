@@ -28,32 +28,30 @@ public class LikeService {
     }
 
     public List<Like> getAllLikesByUser(Long userId) {
-        User user = userRepository.getUserById(userId);
-        if (user == null) {
-            throw new UserNotFoundException("User with id: " + userId + " was not found");
-        }
+        User user = userRepository.getUserById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User with id: " + userId + " was not found"));
 
         return likeRepository.getLikesByUserId(userId);
     }
 
     public List<Like> getAllLikesByTweet(Long tweetId) {
-        Tweet tweet = tweetRepository.getTweetById(tweetId);
-        if (tweet == null) {
-            throw new TweetNotFoundException("Tweet with id: " + tweetId + " was not found");
-        }
+        Tweet tweet = tweetRepository.getTweetById(tweetId)
+                .orElseThrow(() -> new TweetNotFoundException("Tweet with id: " + tweetId + " was not found"));
 
         return likeRepository.getLikesByTweetId(tweetId);
     }
 
     public Like likeATweet(Long tweetId, Long userId) {
-        User user = userRepository.getUserById(userId);
-        Tweet tweet = tweetRepository.getTweetById(tweetId);
+
+        User user = userRepository.getUserById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User with id: " + userId + " was not found"));
+
+        Tweet tweet = tweetRepository.getTweetById(tweetId)
+                .orElseThrow(() -> new TweetNotFoundException("Tweet with id: " + tweetId + " was not found"));
+
         Like existsLike = likeRepository.getLikeByUserIdAndTweetId(userId, tweetId);
-        if (user == null) {
-            throw new UserNotFoundException("User with id: " + userId + " was not found");
-        } else if (tweet == null) {
-            throw new TweetNotFoundException("Tweet with id: " + tweetId + " was not found");
-        } else if (existsLike != null) {
+
+        if (existsLike != null) {
             throw new AlreadyExistsException("Like with id: " + existsLike.getId() + " already exists");
         }
 
