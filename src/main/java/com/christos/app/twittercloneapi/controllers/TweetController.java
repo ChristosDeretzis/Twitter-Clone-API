@@ -1,19 +1,13 @@
 package com.christos.app.twittercloneapi.controllers;
 
-import com.christos.app.twittercloneapi.exceptions.exceptions.TweetNotFoundException;
-import com.christos.app.twittercloneapi.exceptions.exceptions.UserNotFoundException;
 import com.christos.app.twittercloneapi.models.Tweet;
-import com.christos.app.twittercloneapi.models.User;
 import com.christos.app.twittercloneapi.services.TweetService;
-import com.christos.app.twittercloneapi.services.UserService;
-import com.christos.app.twittercloneapi.utils.UpdateJsonUtils;
-import jdk.internal.dynalink.linker.LinkerServices;
+import com.christos.app.twittercloneapi.services.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class TweetController {
 
-    private UserService userService;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
     private TweetService tweetService;
 
     @GetMapping("/tweets")

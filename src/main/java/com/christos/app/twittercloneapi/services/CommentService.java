@@ -7,7 +7,6 @@ import com.christos.app.twittercloneapi.models.Tweet;
 import com.christos.app.twittercloneapi.models.User;
 import com.christos.app.twittercloneapi.repositories.CommentRepository;
 import lombok.AllArgsConstructor;
-import org.hibernate.type.descriptor.spi.JdbcRecommendedSqlTypeMappingContext;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
 public class CommentService {
 
     private CommentRepository commentRepository;
-    private UserService userService;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
     private TweetService tweetService;
 
     public List<Comment> getAllComments() {
@@ -25,7 +24,7 @@ public class CommentService {
     }
 
     public List<Comment> getAllCommentsByUserId(Long userId) {
-        User user = userService.getUserById(userId);
+        User user = userDetailsServiceImpl.getUserById(userId);
         if (user == null) {
             throw new UserNotFoundException("User with id: "+ userId + " does not exist");
         }
@@ -43,7 +42,7 @@ public class CommentService {
     }
 
     public Comment createComment(String text, Long userId, Long tweetId) {
-        User user = userService.getUserById(userId);
+        User user = userDetailsServiceImpl.getUserById(userId);
         Tweet tweet = tweetService.getTweetById(tweetId);
         if (user == null) {
             throw new UserNotFoundException("User with id: "+ userId + " does not exist");

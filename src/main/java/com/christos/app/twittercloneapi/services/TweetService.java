@@ -16,7 +16,7 @@ import java.util.List;
 public class TweetService {
 
     private TweetRepository tweetRepository;
-    private UserService userService;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
 
     public List<Tweet> getAllTweets(){
         return tweetRepository.findAll();
@@ -30,7 +30,7 @@ public class TweetService {
     }
 
     public List<Tweet> getTweetsByUserId(Long user_id) {
-        User user = userService.getUserById(user_id);
+        User user = userDetailsServiceImpl.getUserById(user_id);
 
         if (user == null) {
             throw new UserNotFoundException("User with id: " + user_id + " was not found");
@@ -41,7 +41,7 @@ public class TweetService {
     }
 
     public Tweet createNewTweet(String content, Long user_id) {
-        User user = userService.getUserById(user_id);
+        User user = userDetailsServiceImpl.getUserById(user_id);
 
         if (user == null) {
             throw new UserNotFoundException("User with id: " + user_id + " was not found");
