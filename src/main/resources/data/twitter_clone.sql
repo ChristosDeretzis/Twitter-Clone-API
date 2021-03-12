@@ -68,9 +68,7 @@ CREATE TABLE `twitter_clone`.`follow` (
     FOREIGN KEY (`user_02`)
     REFERENCES `twitter_clone`.`user` (`id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `unique_follow_pair`
-	UNIQUE (`user_01`, `user_02`)
+    ON UPDATE CASCADE
 );
 
 CREATE TABLE `twitter_clone`.`likes` (
@@ -90,9 +88,7 @@ CREATE TABLE `twitter_clone`.`likes` (
     FOREIGN KEY (`user_id`)
     REFERENCES `twitter_clone`.`user` (`id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE,
-   CONSTRAINT `Unique_Like`
-	 UNIQUE (`tweet_id`, `user_id`)
+    ON UPDATE CASCADE
 );
 
 CREATE TABLE `twitter_clone`.`retweet` (
@@ -112,9 +108,21 @@ CREATE TABLE `twitter_clone`.`retweet` (
     FOREIGN KEY (`user_id`)
     REFERENCES `twitter_clone`.`user` (`id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE,
-   CONSTRAINT `Unique_Retweet`
-	 UNIQUE (`tweet_id`, `user_id`)
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE `twitter_clone`.`token` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `token` VARCHAR(300) NOT NULL,
+    `user_id` INT NOT NULL,
+    `expiry_date` DATETIME NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
+    CONSTRAINT `fk_token_user_id`
+     FOREIGN KEY (`user_id`)
+     REFERENCES `twitter_clone`.`user` (`id`)
+     ON DELETE CASCADE
+     ON UPDATE CASCADE
 );
 
 
