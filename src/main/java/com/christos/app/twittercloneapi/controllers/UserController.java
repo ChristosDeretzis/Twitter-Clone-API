@@ -1,7 +1,7 @@
 package com.christos.app.twittercloneapi.controllers;
 
 import com.christos.app.twittercloneapi.models.User;
-import com.christos.app.twittercloneapi.services.UserDetailsServiceImpl;
+import com.christos.app.twittercloneapi.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class UserController {
 
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+    private UserService userDetailsServiceImpl;
 
     @GetMapping("/users")
     private List<User> getAllUsers(){

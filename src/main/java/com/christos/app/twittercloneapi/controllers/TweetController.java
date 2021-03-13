@@ -2,7 +2,7 @@ package com.christos.app.twittercloneapi.controllers;
 
 import com.christos.app.twittercloneapi.models.Tweet;
 import com.christos.app.twittercloneapi.services.TweetService;
-import com.christos.app.twittercloneapi.services.UserDetailsServiceImpl;
+import com.christos.app.twittercloneapi.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class TweetController {
 
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+    private UserService userDetailsServiceImpl;
     private TweetService tweetService;
 
     @GetMapping("/tweets")

@@ -16,7 +16,7 @@ import java.util.List;
 public class TweetService {
 
     private TweetRepository tweetRepository;
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+    private UserService userDetailsServiceImpl;
 
     public List<Tweet> getAllTweets(){
         return tweetRepository.findAll();

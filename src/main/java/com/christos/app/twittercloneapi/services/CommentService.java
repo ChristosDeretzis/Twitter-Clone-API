@@ -16,7 +16,7 @@ import java.util.List;
 public class CommentService {
 
     private CommentRepository commentRepository;
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+    private UserService userDetailsServiceImpl;
     private TweetService tweetService;
 
     public List<Comment> getAllComments() {
