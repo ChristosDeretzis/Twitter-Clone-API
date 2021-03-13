@@ -33,12 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers( "/api/v1/users/*").permitAll()
-                .antMatchers("/api/v1/tweets/*").permitAll()
-                .antMatchers("/api/v1/likes/*").permitAll()
-                .antMatchers("/api/v1/comments/*").permitAll()
-                .antMatchers("/api/v1/retweets/*").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers( "/api/v1/users/*").authenticated()
+                .antMatchers("/api/v1/tweets/*").authenticated()
+                .antMatchers("/api/v1/likes/*").authenticated()
+                .antMatchers("/api/v1/comments/*").authenticated()
+                .antMatchers("/api/v1/retweets/*").authenticated();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
