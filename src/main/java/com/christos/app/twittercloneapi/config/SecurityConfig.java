@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -31,24 +32,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
+        httpSecurity.cors().and()
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/**")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v1/users/**")
-                .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v1/tweets/**")
-                .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v1/likes/**")
-                .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v1/comments/**")
-                .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v1/retweets/**")
-                .permitAll()
                 .anyRequest()
-                .authenticated()
-                .and()
-                .csrf().disable();
+                .authenticated();
         httpSecurity.addFilterBefore(jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class);
     }

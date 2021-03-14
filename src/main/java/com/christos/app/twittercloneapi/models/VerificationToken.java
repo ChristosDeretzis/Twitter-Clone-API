@@ -27,5 +27,5 @@ public class VerificationToken {
     private User user;
 
     @CreationTimestamp
-    private Instant expiryDate;
+    private LocalDateTime expiryDate;
 }

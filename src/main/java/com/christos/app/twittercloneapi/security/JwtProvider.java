@@ -1,11 +1,11 @@
 package com.christos.app.twittercloneapi.security;
 
 import com.christos.app.twittercloneapi.exceptions.exceptions.TwitterException;
-import com.christos.app.twittercloneapi.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
