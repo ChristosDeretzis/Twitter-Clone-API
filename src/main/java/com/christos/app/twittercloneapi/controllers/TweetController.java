@@ -24,7 +24,9 @@ public class TweetController {
     }
 
     @GetMapping("/tweets/{tweet_id}")
-    public Tweet getTweetById(@PathVariable("tweet_id") Long tweet_id) {
+    public Tweet getTweetById(
+            @PathVariable("tweet_id"
+            ) Long tweet_id) {
         return tweetService.getTweetById(tweet_id);
     }
 
