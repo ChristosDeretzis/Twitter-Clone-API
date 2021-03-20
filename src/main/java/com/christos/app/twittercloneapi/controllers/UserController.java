@@ -3,6 +3,7 @@ package com.christos.app.twittercloneapi.controllers;
 import com.christos.app.twittercloneapi.models.User;
 import com.christos.app.twittercloneapi.services.UserService;
 import lombok.AllArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +17,11 @@ public class UserController {
     private UserService userDetailsServiceImpl;
 
     @GetMapping("/users")
-    private List<User> getAllUsers(){
-        return userDetailsServiceImpl.getAllUsers();
+    private List<User> getAllUsers(
+            @RequestParam(defaultValue = "4") int pageSize,
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "DEFAULT") OrderType orderType){
+        return userDetailsServiceImpl.getAllUsers(pageNumber,orderType, pageSize);
     }
 
     @GetMapping("/users/{id}")

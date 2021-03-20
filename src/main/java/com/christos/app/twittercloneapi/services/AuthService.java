@@ -44,6 +44,9 @@ public class AuthService {
         user.setUsername(registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        user.setFirst_name(registerRequest.getFirst_name());
+        user.setLast_name(registerRequest.getLast_name());
+        user.setSex("Male");
 
         userRepository.save(user);
 
