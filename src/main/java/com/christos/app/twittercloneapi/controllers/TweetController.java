@@ -19,8 +19,12 @@ public class TweetController {
     private TweetService tweetService;
 
     @GetMapping("/tweets")
-    public List<Tweet> getAllTweets() {
-        return tweetService.getAllTweets();
+    public List<Tweet> getAllTweets(
+            @RequestParam(defaultValue = "4") int pageSize,
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "DEFAULT") OrderType orderType
+    ) {
+        return tweetService.getAllTweets(pageNumber, pageSize, orderType);
     }
 
     @GetMapping("/tweets/{tweet_id}")
@@ -31,8 +35,12 @@ public class TweetController {
     }
 
     @GetMapping("/tweets/by-user/{user_id}")
-    public List<Tweet> getTweetsByUserId(@PathVariable("user_id") Long id) {
-        return tweetService.getTweetsByUserId(id);
+    public List<Tweet> getTweetsByUserId(
+            @PathVariable("user_id") Long id,
+            @RequestParam(defaultValue = "4") int pageSize,
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "DEFAULT") OrderType orderType) {
+        return tweetService.getTweetsByUserId(id, pageSize, pageNumber, orderType);
     }
 
     @PostMapping("/tweets")

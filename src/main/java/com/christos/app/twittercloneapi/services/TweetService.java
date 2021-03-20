@@ -1,5 +1,6 @@
 package com.christos.app.twittercloneapi.services;
 
+import com.christos.app.twittercloneapi.controllers.OrderType;
 import com.christos.app.twittercloneapi.exceptions.exceptions.TweetNotFoundException;
 import com.christos.app.twittercloneapi.exceptions.exceptions.UserNotFoundException;
 import com.christos.app.twittercloneapi.models.Tweet;
@@ -7,6 +8,10 @@ import com.christos.app.twittercloneapi.models.User;
 import com.christos.app.twittercloneapi.repositories.TweetRepository;
 import com.christos.app.twittercloneapi.utils.UpdateJsonUtils;
 import lombok.AllArgsConstructor;
+import org.hibernate.criterion.Order;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +23,41 @@ public class TweetService {
     private TweetRepository tweetRepository;
     private UserService userDetailsServiceImpl;
 
-    public List<Tweet> getAllTweets(){
-        return tweetRepository.findAll();
+    public List<Tweet> getAllTweets(int pageNumber, int pageSize, OrderType orderType){
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Tweet> tweets = null;
+
+        switch (orderType) {
+            case DEFAULT:
+                tweets = tweetRepository.findAll(pageable);
+                break;
+            case POST_DATE_ASC:
+                tweets = tweetRepository.findAllAndOrderByCreated_atAsc(pageable);
+                break;
+            case POST_DATE_DESC:
+                tweets = tweetRepository.findAllAndOrderByCreated_atDesc(pageable);
+                break;
+            case LIKE_COUNT_ASC:
+                tweets = tweetRepository.findAllAndOrderByLikesAsc(pageable);
+                break;
+            case LIKE_COUNT_DESC:
+                tweets = tweetRepository.findAllAndOrderByLikesDesc(pageable);
+                break;
+            case RETWEET_COUNT_ASC:
+                tweets = tweetRepository.findAllAndOrderByRetweetsAsc(pageable);
+                break;
+            case RETWEET_COUNT_DESC:
+                tweets = tweetRepository.findAllAndOrderByRetweetsDesc(pageable);
+                break;
+            case COMMENT_COUNT_ASC:
+                tweets = tweetRepository.findAllAndOrderByCommentsAsc(pageable);
+                break;
+            case COMMENT_COUNT_DESC:
+                tweets = tweetRepository.findAllAndOrderByCommentsDesc(pageable);
+                break;
+        }
+
+        return tweets.getContent();
     }
 
     public Tweet getTweetById(Long tweet_id) {
@@ -29,7 +67,7 @@ public class TweetService {
         return tweet;
     }
 
-    public List<Tweet> getTweetsByUserId(Long user_id) {
+    public List<Tweet> getTweetsByUserId(Long user_id, int pageNumber, int pageSize, OrderType orderType) {
         User user = userDetailsServiceImpl.getUserById(user_id);
 
         if (user == null) {
