@@ -40,7 +40,7 @@ public class TweetController {
             @RequestParam(defaultValue = "4") int pageSize,
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "DEFAULT") OrderType orderType) {
-        return tweetService.getTweetsByUserId(id, pageSize, pageNumber, orderType);
+        return tweetService.getTweetsByUserId(id, pageNumber, pageSize, orderType);
     }
 
     @PostMapping("/tweets")

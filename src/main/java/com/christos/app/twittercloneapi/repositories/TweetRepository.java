@@ -21,6 +21,9 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     // PAGINATION AND SORTING for /tweets
 
+    @Query(value = "select * from tweet", nativeQuery = true)
+    Page<Tweet> findAll(Pageable pageable);
+
     @Query(value = "select * from tweet order by created_at asc", nativeQuery = true)
     Page<Tweet> findAllAndOrderByCreated_atAsc(Pageable pageable);
 
@@ -60,6 +63,9 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     // PAGINATION AND SORTING for /tweets/by-user/user_id
 
+    @Query(value = "SELECT * FROM tweet t where t.user_id = :user_id", nativeQuery = true)
+    Page<Tweet> findAllByUser(Long user_id, Pageable pageable);
+
     @Query(value = "select * from tweet where tweet.user_id = :user_id order by created_at asc", nativeQuery = true)
     Page<Tweet> findAllByUserAndOrderByCreated_atAsc(Long user_id, Pageable pageable);
 
@@ -81,7 +87,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             nativeQuery = true)
     Page<Tweet> findAllByUserAndOrderByRetweetsAsc(Long user_id, Pageable pageable);
 
-    @Query(value = "select tweet.* from tweet left join retweet on tweet.id = retweet.tweet_id where tweet.user_id = :user_id group by tweet.id order by count(retweet.tweet_id) asc",
+    @Query(value = "select tweet.* from tweet left join retweet on tweet.id = retweet.tweet_id where tweet.user_id = :user_id group by tweet.id order by count(retweet.tweet_id) desc",
             countQuery = "select count(r.tweet_id) from tweet t join left join r retweet on t.id = r.tweet_id where t.user_id = :user_id group by t.id",
             nativeQuery = true)
     Page<Tweet> findAllByUserAndOrderByRetweetsDesc(Long user_id, Pageable pageable);

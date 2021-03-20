@@ -74,8 +74,40 @@ public class TweetService {
             throw new UserNotFoundException("User with id: " + user_id + " was not found");
         }
 
-        List<Tweet> tweets = tweetRepository.getTweetsByUserId(user_id);
-        return tweets;
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Tweet> tweets = null;
+
+        switch (orderType) {
+            case DEFAULT:
+                tweets = tweetRepository.findAllByUser(user_id, pageable);
+                break;
+            case POST_DATE_ASC:
+                tweets = tweetRepository.findAllByUserAndOrderByCreated_atAsc(user_id, pageable);
+                break;
+            case POST_DATE_DESC:
+                tweets = tweetRepository.findAllByUserAndOrderByCreated_atDesc(user_id, pageable);
+                break;
+            case LIKE_COUNT_ASC:
+                tweets = tweetRepository.findAllByUserAndOrderByLikesAsc(user_id, pageable);
+                break;
+            case LIKE_COUNT_DESC:
+                tweets = tweetRepository.findAllByUserAndOrderByLikesDesc(user_id, pageable);
+                break;
+            case RETWEET_COUNT_ASC:
+                tweets = tweetRepository.findAllByUserAndOrderByRetweetsAsc(user_id, pageable);
+                break;
+            case RETWEET_COUNT_DESC:
+                tweets = tweetRepository.findAllByUserAndOrderByRetweetsDesc(user_id, pageable);
+                break;
+            case COMMENT_COUNT_ASC:
+                tweets = tweetRepository.findAllByUserAndOrderByCommentsAsc(user_id, pageable);
+                break;
+            case COMMENT_COUNT_DESC:
+                tweets = tweetRepository.findAllByUserAndOrderByCommentsDesc(user_id, pageable);
+                break;
+        }
+
+        return tweets.getContent();
     }
 
     public Tweet createNewTweet(String content, Long user_id) {
